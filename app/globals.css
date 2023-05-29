@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.text-black {
+  color: black;
+}
+
+.border-gray-800 {
+  border-color: rgb(31 41 55);
+}
+
+
+
+html,
+body,
+:root {
+  height: 100%;
+  background-color: rgb(0, 0, 0);
+  color: white;
+  font-family: 'Sorts Mill Goudy', serif;
+}
