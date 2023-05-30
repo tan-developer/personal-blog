@@ -1,10 +1,14 @@
+import { SessionProvider } from "next-auth/react";
+import Wrapper from "./components/UI/Wrapper";
 import SideBar from "./components/aside";
+import Footer from "./components/footer";
 import Navbar from "./components/navbar";
+import ToasterContext from "./context/ToasterContext";
 import "./globals.css";
 
 export const metadata = {
   title: "Tan Blog",
-  description: "Hehe",
+  description: "Personal Blog",
 };
 
 export default function RootLayout({
@@ -15,17 +19,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <link rel="icon" href="/static/icon.svg" />
-      <style>
-        @import
-        url('https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy:ital@0;1&display=swap');
-      </style>
+
       <body>
         <div className=" max-w-7xl mx-auto flex max-h-fit h-screen">
-          <Navbar />
+            <Navbar />
 
-          {children}
-
-          <SideBar />
+            {children}
+            <SideBar />
+          <ToasterContext />
         </div>
       </body>
     </html>

@@ -13,6 +13,9 @@ module.exports = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       colors: { "main-blue": "#86e7d4" },
+      fontFamily : {
+        'base' : ['Sorts Mill Goudy']
+      }
     },
   },
   plugins: [],

@@ -1,22 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy:ital@0;1&display=swap");
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.text-black {
-  color: black;
-}
-
-.border-gray-800 {
-  border-color: rgb(31 41 55);
-}
-
-
-
 html,
 body,
 :root {
   height: 100%;
   background-color: rgb(0, 0, 0);
   color: white;
-  font-family: 'Sorts Mill Goudy', serif;
+  font-family: "Sorts Mill Goudy", serif;
+}
+
+::selection {
+  background-color: #fdf9c9;
+  color: #254d4a;
+  box-shadow: 0px 0px 64px -4px rgba(black, 0.64);
 }
