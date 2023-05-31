@@ -1,7 +1,8 @@
-"use client";
 
 import clsx from "clsx";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+
+import {useState} from 'react'
 
 interface InputProps {
   label: string;
@@ -24,12 +25,12 @@ const Input: React.FC<InputProps> = ({
 }) => {
   return (
     <div
-      className="w-full"
+      className="w-full font-sans"
     >
       <label
         htmlFor={id}
         className="
-          italic
+        
         "
       >
         {label}
@@ -52,7 +53,7 @@ const Input: React.FC<InputProps> = ({
               py-2 pl-4 pr-4
               focus:outline-none
             `,
-            errors[id] && "focus:ring-rose-500",
+            errors && "focus:ring-rose-500",
             disable && "opacity-50 cursor-default"
           )}
         />

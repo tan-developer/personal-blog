@@ -1,8 +1,8 @@
-import { SessionProvider } from "next-auth/react";
 import Wrapper from "./components/UI/Wrapper";
 import SideBar from "./components/aside";
 import Footer from "./components/footer";
 import Navbar from "./components/navbar";
+import AuthContext from "./context/AuthProvider";
 import ToasterContext from "./context/ToasterContext";
 import "./globals.css";
 
@@ -22,11 +22,13 @@ export default function RootLayout({
 
       <body>
         <div className=" max-w-7xl mx-auto flex max-h-fit h-screen">
+          <AuthContext>
             <Navbar />
 
             {children}
             <SideBar />
-          <ToasterContext />
+            <ToasterContext />
+          </AuthContext>
         </div>
       </body>
     </html>

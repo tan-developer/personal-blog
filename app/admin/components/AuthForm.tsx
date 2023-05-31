@@ -12,6 +12,7 @@ import { useForm, Resolver, SubmitHandler, FieldValues } from "react-hook-form";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { toast } from "react-hot-toast";
 import Link from "@/app/components/UI/Link";
+import Admin from "./Admin";
 
 export type Variant = "LOGIN" | "REGISTER";
 
@@ -27,10 +28,12 @@ const AuthForm: React.FC = () => {
 
   const { data, status, update } = useSession();
 
-  console.log(data, status);
-
   useEffect(() => {
-    console.log(status);
+    console.log(data, status);
+
+    // development env
+    loginHandler({email : "tan.devloper@gmail.com" , password : "Phamngoctan123"})
+
 
     return () => {};
   }, [status]);
@@ -48,21 +51,46 @@ const AuthForm: React.FC = () => {
   });
 
   const registerHandler = (data: FieldValues) => {
-    axios.post("/api/register", data);
+    setIsLoading(true);
+    axios
+      .post("/api/register", data)
+      .then(() => {
+        toast.success("Create account successfully !");
+      })
+      .then(() => {
+        loginHandler(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Some thing when wrong!");
+      })
+      .finally(async () => {
+        await setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+      });
   };
   const loginHandler = (data: FieldValues) => {
+    setIsLoading(true);
+
     signIn("credentials", {
       ...data,
       redirect: false,
-    }).then((callback) => {
-      if (callback?.error) {
-        toast.error("Invalid credentials");
-      }
+    })
+      .then((callback) => {
+        if (callback?.error) {
+          toast.error("Invalid credentials");
+        }
 
-      if (callback?.ok && !callback.error) {
-        toast.success("Login successfully !");
-      }
-    });
+        if (callback?.ok && !callback.error) {
+          toast.success("Login successfully !");
+        }
+      })
+      .finally(async () => {
+        await setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+      });
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
@@ -88,7 +116,7 @@ const AuthForm: React.FC = () => {
 
   return (
     <div className="">
-      {/* {(status === "unauthenticated") && (
+      {status === "unauthenticated" && (
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col justify-center items-center "
@@ -136,27 +164,6 @@ const AuthForm: React.FC = () => {
             </div>
           </div>
         </form>
-      )} */}
-
-      {/* {(status === "loading") && (
-        <p>Loading</p>
-      )} */}
-
-      {status === "unauthenticated" && (
-        <div className="flex">
-          <div className="flex text-lg">
-            <p>tan-developer </p>
-            &nbsp;/&nbsp;
-            <Link
-              onClick={() => signOut()}
-              href="#"
-              blank={false}
-              className="text-main-blue italic underline"
-            >
-              logout
-            </Link>
-          </div>
-        </div>
       )}
     </div>
   );

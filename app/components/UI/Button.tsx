@@ -11,6 +11,7 @@ interface ButtonProps {
   secondary?: boolean;
   danger?: boolean;
   disable?: boolean;
+  className?:string
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -21,6 +22,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   secondary,
   type,
+  className
 }) => {
   return (
     <button
@@ -44,7 +46,7 @@ const Button: React.FC<ButtonProps> = ({
         danger &&
           "bg-rose-500 hover:bg-rose-600 focus-visible:outline-rose-600",
         !secondary && !danger && "bg-white  focus-visible:outline-sky-600"
-      )}
+      ) + " " + className}
     >
       {children}
     </button>
