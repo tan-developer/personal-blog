@@ -87,16 +87,26 @@ const Editor: React.FC = ({}) => {
         data.imageUrl.startsWith("https://res.cloudinary.com/")
       ) {
         // All conditions are met
-        axios.post('/api/post' , {
-          ...data
-        })
+        const toastId = toast.loading("Posting...");
+        axios
+          .post("/api/post", {
+            ...data,
+          })
+          .then(() => {
+            toast.dismiss(toastId)
+            toast.success("Upload Post Successfully 🚀")
+          })
+          .catch(() => {
+            toast.dismiss(toastId)
+            toast.error("Something is wrong . Please reload the page 😵")
+          })
+          ;
       } else {
         // Notify user about the failed condition(s)
         if (!data.header || data.header.length <= 10) {
           toast("Header should have more than 10 characters", {
             duration: 1000,
             icon: <BiError />,
-            
           });
         }
         if (
@@ -207,13 +217,13 @@ const Editor: React.FC = ({}) => {
         >
           <main
             className="
-          mx-auto
-          my-10
-          prose
-          prose-invert 
-          font-sans 
-          w-full
-          prose-img:w-full
+              mx-auto
+              my-10
+              prose
+              prose-invert 
+              font-sans 
+              w-full
+              prose-img:w-full
           "
           >
             {previewValue && <MDXRender source={previewValue} />}

@@ -31,21 +31,22 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disable}
       className={clsx(
         `
+          border-gray-700
           border
           py-1 px-4
           hover:bg-gray-200 
           transition
           rounded-md
-          text-black
+          text-gray-500
           font-medium
           mt-4
       `,
         disable && "opacity-50 cursor-default",
         fullWidth && "w-full",
-        secondary ? "text-gray-900" : "text-black",
+        secondary ? "text-white" : "text-white",
         danger &&
           "bg-rose-500 hover:bg-rose-600 focus-visible:outline-rose-600",
-        !secondary && !danger && "bg-white  focus-visible:outline-sky-600"
+        !secondary && !danger && "bg-black  focus-visible:outline-sky-600"
       ) + " " + className}
     >
       {children}
