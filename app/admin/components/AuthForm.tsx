@@ -23,6 +23,8 @@ export interface FormValues {
 }
 
 const AuthForm: React.FC = () => {
+  console.count();
+  
   const [variant, setVariant] = React.useState<Variant>("LOGIN");
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
@@ -33,7 +35,6 @@ const AuthForm: React.FC = () => {
 
     // development env
     loginHandler({email : "tan.devloper@gmail.com" , password : "Phamngoctan123"})
-
 
     return () => {};
   }, [status]);

@@ -11,6 +11,9 @@ const User: React.FC = () => {
   const router = useRouter();
   const { data, status, update } = useSession();
 
+
+  console.log('asasd')
+
   return (
     <>
       {status === "authenticated" && (

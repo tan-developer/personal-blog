@@ -22,13 +22,14 @@ model User {
 }
 
 model Post {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId // auto
-  title     String
-  content   String
-  createdAt DateTime @default(now()) // auto
-  updatedAt DateTime @updatedAt // auto
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  String
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId // auto
+  title      String
+  content    String
+  titleImage String
+  createdAt  DateTime @default(now()) // auto
+  updatedAt  DateTime @updatedAt // auto
+  author     User     @relation(fields: [authorId], references: [id])
+  authorId   String
 }
 
 model Image {

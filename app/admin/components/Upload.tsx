@@ -53,7 +53,7 @@ const UpLoad: React.FC = () => {
                 icon  : <HiOutlinePaperClip />
               })
             }}
-            key={element.authorId}
+            key={element.url}
             className="
               border 
               border-gray-700 
@@ -90,10 +90,10 @@ const UpLoad: React.FC = () => {
         onUpload={handleUpload}
         uploadPreset="f4c6bx4o"
       >
-        <button className="border py-1 px-2 rounded-md flex justify-center items-center mb-4 font-sans border-gray-700 my-2 ">
+        <span className="border py-1 px-2 rounded-md flex justify-center items-center mb-4 font-sans border-gray-700 my-2 ">
           <BsCardImage />
           <strong className="ml-2 font-normal">Upload</strong>
-        </button>
+        </span>
       </CldUploadButton>
     </>
   );
