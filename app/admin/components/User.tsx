@@ -6,19 +6,20 @@ import Button from "@/app/components/UI/Button";
 import { useRouter } from 'next/navigation';
 
 import { AiOutlinePlus } from "react-icons/ai";
+import { User } from "@prisma/client";
 
-const User: React.FC = () => {
+interface UserProps {
+  user : User | null
+}
+
+const User: React.FC<UserProps> = ({user}) => {
   const router = useRouter();
-  const { data, status, update } = useSession();
-
-
-  console.log('asasd')
-
+  
   return (
     <>
-      {status === "authenticated" && (
+      {user?.email && (
         <div className="">
-          <Admin data={data} />
+          <Admin user={user} />
 
           <Button
             onClick={() => router.push(`/admin/post`)}

@@ -11,8 +11,8 @@ import { useForm, Resolver, SubmitHandler, FieldValues } from "react-hook-form";
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import { toast } from "react-hot-toast";
-import Link from "@/app/components/UI/Link";
-import Admin from "./Admin";
+import getCurrentUser from "@/app/actions/getCurrentUser";
+import { User } from "@prisma/client";
 
 export type Variant = "LOGIN" | "REGISTER";
 
@@ -23,18 +23,20 @@ export interface FormValues {
 }
 
 const AuthForm: React.FC = () => {
-  console.count();
-  
+
   const [variant, setVariant] = React.useState<Variant>("LOGIN");
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const { data, status, update } = useSession();
+  const { data, status } = useSession();
 
   useEffect(() => {
     console.log(data, status);
 
     // development env
-    loginHandler({email : "tan.devloper@gmail.com" , password : "Phamngoctan123"})
+    // loginHandler({
+    //   email: "tan.devloper@gmail.com",
+    //   password: "Phamngoctan123",
+    // });
 
     return () => {};
   }, [status]);
@@ -62,7 +64,6 @@ const AuthForm: React.FC = () => {
         loginHandler(data);
       })
       .catch((err) => {
-        console.log(err);
         toast.error("Some thing when wrong!");
       })
       .finally(async () => {
@@ -117,7 +118,7 @@ const AuthForm: React.FC = () => {
 
   return (
     <div className="">
-      {status === "unauthenticated" && (
+      {(status === "unauthenticated") && (
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col justify-center items-center "

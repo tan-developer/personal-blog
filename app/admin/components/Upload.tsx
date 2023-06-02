@@ -5,9 +5,10 @@ import { useSession } from "next-auth/react";
 import { CldUploadButton, getCldImageUrl } from "next-cloudinary";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
-import { BsCardImage } from "react-icons/bs";
+import { BsCardImage, BsTrash } from "react-icons/bs";
 import Image from "next/image";
-import {HiOutlinePaperClip} from 'react-icons/hi'
+import { HiOutlinePaperClip } from "react-icons/hi";
+import clsx from "clsx";
 
 const UpLoad: React.FC = () => {
   const { data } = useSession();
@@ -38,36 +39,65 @@ const UpLoad: React.FC = () => {
           setImages(res.data);
         });
   }, [data, buffer]);
+
+  // Handler
+
+  const copyHandler = (element : Prisma.Image) => {
+      navigator.clipboard.writeText(element.url);
+      toast("Copied to clipboard", {
+        duration: 1000,
+        icon: <HiOutlinePaperClip />,
+      });
+  }
+
+
+  const removeHandler = ({id} : Prisma.Image) : void => {
+      axios.post('/api/delete/image' , {
+        id : id
+      })
+      .then(() => {
+        toast("Image Deleted !", {
+          icon : <BsTrash />,
+          duration : 2000
+        })
+        setBuffer(buffer + 1)
+      })
+      .catch(() => {
+        toast.error("Something is wrong 😵");
+      })
+  }
+
   return (
+
     <>
-      <ul className="">
-        <label htmlFor="" className="mb-2">
-          Images :
-        </label>
-        {images?.map((element) => (
+      <ul className="mb-2">
+        <div className="mb-2">
+          <label htmlFor="">{images?.length! > 0 && "Images :"}</label>
+        </div>
+        {images?.map((element, index) => (
           <li
-            onClick={() => {
-              navigator.clipboard.writeText(element.url)
-              toast("Copied to clipboard" , {
-                duration : 1000,
-                icon  : <HiOutlinePaperClip />
-              })
-            }}
+            
             key={element.url}
-            className="
-              border 
-              border-gray-700 
-              rounded-md 
-              py-1 
-              px-2 
-              mb-2
-              active:border-gray-300
-              hover:border-main-blue
-              cursor-pointer
-              flex
-          "
+            className={clsx(`
+                overflow-hidden
+                border 
+                border-gray-700 
+                rounded-md 
+                pt-2
+                py-1 
+                mb-2
+                px-2 
+                active:border-gray-300
+                hover:border-main-blue
+                cursor-pointer
+                flex
+                transition-all
+                animate-fade
+                relative
+                group
+            `)}
           >
-            <div className="">
+            <div className="" onClick={() => copyHandler(element)}>
               <Image
                 className="
               aspect-square
@@ -79,9 +109,30 @@ const UpLoad: React.FC = () => {
                 height={20}
               />
             </div>
-            <p className="w-full overflow-hidden whitespace-nowrap ml-2 text-ellipsis">
+            <p className="w-full overflow-hidden whitespace-nowrap ml-2 text-ellipsis" onClick={() => copyHandler(element)}>
               {element.url}
             </p>
+
+            <button className="
+              absolute
+              right-0
+              top-0
+              h-full
+              w-fit
+              px-2
+              mr-1
+              bg-black
+              opacity-0
+              group-hover:!opacity-100
+              transition-all
+              active:translate-y-[2px]  
+             "
+             onClick={(e) => {
+              removeHandler(element)
+              e.preventDefault()
+
+             }}
+            ><BsTrash size={20}/></button>
           </li>
         ))}
       </ul>

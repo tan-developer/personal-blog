@@ -1,0 +1,12 @@
+************************************* Invoked: Fri Jun 2 17:17:55 2023
+[0] Arguments: C:\Users\Pham Ngoc Tan\Documents\blog\public\static\msys2-x86_64-20230526.exe
+[4] Operations sanity check succeeded.
+[4] Warning: Cannot create lock file "C:\Users\Pham Ngoc Tan\AppData\Local\Temp\msys2-x86_64-202305261234865.lock": The process cannot access the file because it is being used by another process.
+ (0x00000020)
+[14] UnableToStart : Unable to start installer : Another msys2-x86_64-20230526 instance is already running. Wait until it finishes, close it, or restart your system.
+************************************* Invoked: Fri Jun 2 17:18:04 2023
+[0] Arguments: C:\Users\Pham Ngoc Tan\Documents\blog\public\static\msys2-x86_64-20230526.exe
+[4] Operations sanity check succeeded.
+[4] Warning: Cannot create lock file "C:\Users\Pham Ngoc Tan\AppData\Local\Temp\msys2-x86_64-202305261234865.lock": The process cannot access the file because it is being used by another process.
+ (0x00000020)
+[14] UnableToStart : Unable to start installer : Another msys2-x86_64-20230526 instance is already running. Wait until it finishes, close it, or restart your system.

@@ -1,13 +1,13 @@
 import { signOut } from "next-auth/react";
 import Link from "@/app/components/UI/Link";
 import { Session } from "next-auth";
+import { User } from "@prisma/client";
 
 interface AdminProps {
-  data : Session
+  user : User | null
 }
 
-const Admin: React.FC<AdminProps> = ({data}) => {
-  const {user} = data
+const Admin: React.FC<AdminProps> = ({user}) => {
 
   return (
     <div className="flex">

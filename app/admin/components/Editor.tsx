@@ -2,12 +2,12 @@
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
-import React, { useContext } from "react";
-import { commands, ICommand, EditorContext } from "@uiw/react-md-editor";
+import React from "react";
+import { commands, ICommand } from "@uiw/react-md-editor";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import Input from "@/app/components/UI/Input";
@@ -18,7 +18,6 @@ import MDXRender from "./MD/MDXRender";
 import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemoteSerializeResult } from "next-mdx-remote";
 import rehypeHighlight from "rehype-highlight";
-import Button from "@/app/components/UI/Button";
 import { BsFillSendFill } from "react-icons/bs";
 import { toast } from "react-hot-toast";
 
@@ -42,9 +41,9 @@ const Editor: React.FC = ({}) => {
   const router = useRouter();
 
   useEffect(() => {
-    if (status === "unauthenticated" || status === "loading") {
-      router.push("/admin");
-    }
+    // if (status === "unauthenticated" || status === "loading") {
+    //   router.push("/admin");
+    // }
   }, [status]);
 
   useEffect(() => {
@@ -54,7 +53,6 @@ const Editor: React.FC = ({}) => {
           props: { source },
         } = await getSerialize(value.replace(/\\n/g, "\\"));
 
-        console.log(value.replace(/\n/g, "\n"));
 
         await setPreview(source);
       })();

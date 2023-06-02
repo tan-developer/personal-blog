@@ -42,7 +42,7 @@ const Post: React.FC<Props> = ({ post }) => {
         ml-10
       "
       >
-        <p className="break-before-avoid text-gray-500 ">`{format(post.createdAt, "dd/MM/yyyy hh:mm")} & {post.desc}`</p>
+        <p className="break-before-avoid text-gray-500 ">{format(post.createdAt, "dd/MM/yyyy hh:mm")} & {post.desc}</p>
         <h1 className={'capitalize text-2xl font-bold'}>{post.title}</h1>
       </div>
     </li>
