@@ -14,6 +14,7 @@ export async function POST(request: Request) {
     const post = await prisma.post.create({
       data : {
         title : data.header,
+        desc : data.desc,
         content : JSON.stringify(data.content),
         titleImage : data.imageUrl,
         author : {

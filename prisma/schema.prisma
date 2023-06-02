@@ -24,6 +24,7 @@ model User {
 model Post {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId // auto
   title      String
+  desc       String
   content    String
   titleImage String
   createdAt  DateTime @default(now()) // auto

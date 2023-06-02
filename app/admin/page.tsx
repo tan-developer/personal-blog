@@ -18,9 +18,8 @@ export default async  function Admin() {
           flex flex-wrap
           w-full
           mt-10
-          [&>*:not(:first-child)]:border-t-[.25px]
-          [&>*:not(:first-child)]:border-gray-700/50
-          [&>*:not(:first-child)]:pt-10
+          [&>*:not(:last-child)]:border-b-[.25px]
+          [&>*:not(:last-child)]:border-gray-700/50
         ">
         {listPost.map((post : Prisma.Post) => (
           <Post post={post}/>
