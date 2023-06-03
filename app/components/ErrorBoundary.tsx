@@ -1,37 +1,58 @@
-import React, { ErrorInfo } from 'react';
+import React, { ReactNode } from 'react';
 
 interface ErrorBoundaryProps {
-  fallbackComponent: React.ReactNode;
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 interface ErrorBoundaryState {
   hasError: boolean;
+  prevChildren: ReactNode;
 }
 
 class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
+
     this.state = {
       hasError: false,
+      prevChildren: props.children
     };
   }
 
   static getDerivedStateFromError(_: Error): ErrorBoundaryState {
-    return { hasError: true };
+    return { hasError: true, prevChildren: null };
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    // You can log the error or send it to an error reporting service
-    console.error('Error caught by ErrorBoundary:', error, errorInfo);
+  componentDidUpdate(prevProps: ErrorBoundaryProps) {
+    if (prevProps.children !== this.props.children) {
+      this.setState({
+        hasError: false,
+        prevChildren: this.props.children
+      });
+    }
   }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.log({ error, errorInfo });
+  }
+
+  handleTryAgain = () => {
+    this.setState({ hasError: false });
+  };
 
   render() {
     if (this.state.hasError) {
-      return this.props.fallbackComponent;
+      return (
+        <div>
+          <h2>Oops, there is an error!</h2>
+          <button type="button" onClick={this.handleTryAgain}>
+            Try again?
+          </button>
+        </div>
+      );
     }
 
-    return this.props.children;
+    return this.state.prevChildren;
   }
 }
 

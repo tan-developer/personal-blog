@@ -1,5 +1,4 @@
 import getCurrentUser from "../actions/getCurrentUser";
-import getSession from "../actions/getSession";
 import AuthForm from "./components/AuthForm";
 import Post from "./components/Post";
 import User from "./components/User";
@@ -8,7 +7,6 @@ import Prisma from "@prisma/client";
 
 export default async function Admin() {
   const user = await getCurrentUser();
-  const server = await getSession();
 
 
   const listPost: (Post & {})[] = await getAllPost();

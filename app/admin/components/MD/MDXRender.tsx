@@ -4,7 +4,7 @@ import {
   MDXRemoteSerializeResult,
 } from "next-mdx-remote";
 
-import { CodePen, Gist } from "mdx-embed";
+import { CodePen, Gist ,CodeSandbox , Spotify , TikTok ,Twitch  , YouTube } from "mdx-embed";
 import ErrorBoundary from "@/app/components/ErrorBoundary";
 
 interface MDXRenderProps {
@@ -12,14 +12,20 @@ interface MDXRenderProps {
     Record<string, unknown>,
     Record<string, unknown>
   >;
+
+
+}
+
+const Components = {
+  CodePen, Gist ,CodeSandbox , Spotify , TikTok ,Twitch  , YouTube
 }
 
 const MDXRender: React.FC<MDXRenderProps> = ({ source }) => {
   return (
     <>
       {source && (
-        <ErrorBoundary fallbackComponent={<h1>Error</h1>}>
-          <MDXRemote {...source} components={{ CodePen }} />
+        <ErrorBoundary>
+          <MDXRemote {...source} components={Components} />
         </ErrorBoundary>
       )}
     </>

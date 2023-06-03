@@ -16,9 +16,10 @@ export default async function Home() {
 
   return (
     <main
-      className="
+      className=" 
     max-w-2xl w-full mx-auto overflow-y-auto md:pt-20 min-h-screen
     post px-6 pt-[230px] pb-20  lg:px-20
+
     "
     >
       <div className="">
