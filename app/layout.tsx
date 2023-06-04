@@ -1,6 +1,4 @@
-import Wrapper from "./components/UI/Wrapper";
 import SideBar from "./components/aside";
-import Footer from "./components/footer";
 import Navbar from "./components/navbar";
 import AuthContext from "./context/AuthProvider";
 import ToasterContext from "./context/ToasterContext";

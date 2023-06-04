@@ -3,6 +3,10 @@ import axios from "axios";
 import Image from "next/image";
 import getAllPostByPage from "../actions/getPostByPage";
 import Post from "../admin/components/Post";
+import Header from "../components/UI/Header";
+
+
+import { useParams } from 'next/navigation';
 
 const isPosts = (posts: Prisma.Post[] | []): posts is Prisma.Post[] => {
   return posts.length > 0;
@@ -23,12 +27,7 @@ export default async function Home() {
     "
     >
       <div className="">
-        <h1 className="italic text-2xl text-gray-400">Writings</h1>
-
-        <p className="font-sans mt-4 text-2xl font-medium tracking-tight text-gray-600 dark:text-gray-400 md:mt-0 md:text-6xl md:font-black md:text-black dark:md:text-white break-keep">
-          {" "}
-          Exploring Code with an Intern
-        </p>
+        <Header desc="Exploring Code with an Intern" title="Writings"/>
 
         {isPosts(posts) && (
           <ul className="

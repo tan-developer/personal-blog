@@ -2,7 +2,7 @@
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
@@ -12,7 +12,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import Input from "@/app/components/UI/Input";
 import UpLoad from "./Upload";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Wrapper from "@/app/components/UI/Wrapper";
 import MDXRender from "./MD/MDXRender";
 import { serialize } from "next-mdx-remote/serialize";
@@ -30,7 +30,12 @@ const codePreview: ICommand = {
   value: "preview",
 };
 
-const Editor: React.FC = ({}) => {
+interface IEditor {}
+
+const Editor: React.FC<IEditor> = ({}) => {
+  const params = useParams();
+  console.log(params);
+
   const [value, setValueMd] = React.useState("");
   const [previewValue, setPreview] =
     React.useState<
@@ -52,7 +57,6 @@ const Editor: React.FC = ({}) => {
         const {
           props: { source },
         } = await getSerialize(value.replace(/\\n/g, "\\"));
-
 
         await setPreview(source);
       })();
@@ -91,14 +95,13 @@ const Editor: React.FC = ({}) => {
             ...data,
           })
           .then(() => {
-            toast.dismiss(toastId)
-            toast.success("Upload Post Successfully 🚀")
+            toast.dismiss(toastId);
+            toast.success("Upload Post Successfully 🚀");
           })
           .catch(() => {
-            toast.dismiss(toastId)
-            toast.error("Something is wrong . Please reload the page 😵")
-          })
-          ;
+            toast.dismiss(toastId);
+            toast.error("Something is wrong . Please reload the page 😵");
+          });
       } else {
         // Notify user about the failed condition(s)
         if (!data.header || data.header.length <= 10) {
@@ -111,7 +114,7 @@ const Editor: React.FC = ({}) => {
           !data.imageUrl ||
           !data.imageUrl.startsWith("https://res.cloudinary.com/")
         ) {
-          toast("Please upload the image before use it !", {
+          toast("Please upload and choose the image before post  !", {
             duration: 1000,
             icon: <BiError />,
           });
@@ -123,26 +126,27 @@ const Editor: React.FC = ({}) => {
   return (
     <form action="" onSubmit={handleSubmit(onSubmit)}>
       <div className="container" data-color-mode="dark">
-        {status === "authenticated" && (
           <>
-            <Input
-              register={register}
-              errors={errors}
-              id="header"
-              label="Header :"
-            />
-            <Input
-              register={register}
-              errors={errors}
-              id="desc"
-              label="Description :"
-            />
-            <Input
-              register={register}
-              errors={errors}
-              id="imageUrl"
-              label="Thumbnail :"
-            />
+            <Suspense fallback={<>Loading</>}>
+              <Input
+                register={register}
+                errors={errors}
+                id="header"
+                label="Header :"
+              />
+              <Input
+                register={register}
+                errors={errors}
+                id="desc"
+                label="Description :"
+              />
+              <Input
+                register={register}
+                errors={errors}
+                id="imageUrl"
+                label="Thumbnail :"
+              />
+            </Suspense>
             <UpLoad />
             <MDEditor
               aria-atomic={true}
@@ -154,15 +158,11 @@ const Editor: React.FC = ({}) => {
               onChange={(val) => {
                 setValueMd(val!);
                 (async () => {
-                  setValue(
-                    "content",
-                    await getSerialize(val!.replace(/\\n/g, "\\"))
-                  );
+                  setValue("content", val!.replace(/\\n/g, "\\"));
                 })();
               }}
             />
           </>
-        )}
 
         <button
           onClick={onSubmit}
@@ -231,6 +231,8 @@ const Editor: React.FC = ({}) => {
     </form>
   );
 };
+
+// Formatting part
 
 export async function getSerialize(data: string) {
   const source = data;
