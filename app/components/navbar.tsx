@@ -4,8 +4,8 @@ import Link from "next/link";
 const Navbar: React.FC = () => {
   const linkArr: [string, string][] = [
     ["About", "/"],
-    ["Writings", "/writings"],
-    ["Blog", "/blog"],
+    ["Writings", "/blog"],
+    ["Project", "/project"],
     ["Contact", "/contact"],
   ];
 

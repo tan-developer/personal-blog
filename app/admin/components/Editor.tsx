@@ -45,11 +45,6 @@ const Editor: React.FC<IEditor> = ({}) => {
   const { data, status } = useSession();
   const router = useRouter();
 
-  useEffect(() => {
-    // if (status === "unauthenticated" || status === "loading") {
-    //   router.push("/admin");
-    // }
-  }, [status]);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -233,8 +228,7 @@ const Editor: React.FC<IEditor> = ({}) => {
 };
 
 // Formatting part
-
-export async function getSerialize(data: string) {
+async function getSerialize(data: string) {
   const source = data;
   const mdxSource = await serialize(source, {
     mdxOptions: {

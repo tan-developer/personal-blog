@@ -12,7 +12,7 @@ export default async function Admin() {
   const listPost: (Post & {})[] = await getAllPost();
 
   return (
-    <main className="max-w-2xl w-full mx-auto overflow-y-auto md:pt-20 min-h-screen ">
+    <main className="max-w-xl w-full mx-auto overflow-y-auto md:pt-20 min-h-screen pt-5 px-2 pb-20">
       <AuthForm />
       {user && (
         <>
