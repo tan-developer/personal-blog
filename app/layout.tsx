@@ -4,6 +4,9 @@ import Navbar from "./components/navbar";
 import AuthContext from "./context/AuthProvider";
 import ToasterContext from "./context/ToasterContext";
 import "./globals.css";
+import Wrapper from "./components/UI/Wrapper";
+import Header from "./components/header";
+import Footer from "./components/footer";
 
 export const metadata = {
   title: "tanngocph ― Front-end Developer",
@@ -29,7 +32,23 @@ export default function RootLayout({
           <AuthContext>
             <Navbar />
 
-            {children}
+            <main
+              className=" 
+    max-w-2xl w-full mx-auto overflow-y-auto md:pt-20 min-h-screen
+    post px-6  pb-20  lg:px-20
+
+    "
+            >
+              <Wrapper className="lg:hidden block">
+                <Header />
+              </Wrapper>
+
+              {children}
+
+              <Wrapper className="lg:hidden block mt-10">
+                <Footer />
+              </Wrapper>
+            </main>
             <SideBar />
             <ToasterContext />
           </AuthContext>

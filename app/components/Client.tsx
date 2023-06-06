@@ -1,13 +1,12 @@
-'use client'
-
+"use client"
 import React from "react";
 
 interface IClientRender {
-  fallback: React.ReactNode;
+  children: React.ReactNode;
 }
 
-const ClientRender: React.FC<IClientRender> = ({ fallback }) => {
-  return <React.Fragment>{fallback}</React.Fragment>;
+const ClientRender: React.FC<IClientRender> = ({ children }) => {
+  return <React.Fragment>{children}</React.Fragment>;
 };
 
 export default ClientRender

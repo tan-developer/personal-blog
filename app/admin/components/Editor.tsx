@@ -33,7 +33,6 @@ const codePreview: ICommand = {
 interface IEditor {}
 
 const Editor: React.FC<IEditor> = ({}) => {
-
   const [value, setValueMd] = React.useState("");
   const [previewValue, setPreview] =
     React.useState<
@@ -41,7 +40,6 @@ const Editor: React.FC<IEditor> = ({}) => {
     >();
 
   const { data } = useSession();
-
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -118,43 +116,49 @@ const Editor: React.FC<IEditor> = ({}) => {
   return (
     <form action="" onSubmit={handleSubmit(onSubmit)}>
       <div className="container" data-color-mode="dark">
-          <>
-            <Suspense fallback={<>Loading</>}>
-              <Input
-                register={register}
-                errors={errors}
-                id="header"
-                label="Header :"
-              />
-              <Input
-                register={register}
-                errors={errors}
-                id="desc"
-                label="Description :"
-              />
-              <Input
-                register={register}
-                errors={errors}
-                id="imageUrl"
-                label="Thumbnail :"
-              />
-            </Suspense>
-            <UpLoad />
-            <MDEditor
-              aria-atomic={true}
-              className="text-lg"
-              value={value}
-              preview="edit"
-              extraCommands={[codePreview, commands.fullscreen]}
-              height={500}
-              onChange={(val) => {
-                setValueMd(val!);
-                (async () => {
-                  setValue("content", val!.replace(/\\n/g, "\\"));
-                })();
-              }}
+        <>
+          <Suspense fallback={<>Loading</>}>
+            <Input
+              register={register}
+              errors={errors}
+              id="header"
+              label="Header :"
             />
-          </>
+            <Input
+              register={register}
+              errors={errors}
+              id="desc"
+              label="Description :"
+            />
+            <Input
+              register={register}
+              errors={errors}
+              id="imageUrl"
+              label="Thumbnail :"
+            />
+          </Suspense>
+          <UpLoad />
+          <MDEditor
+            aria-atomic={true}
+            className="text-lg"
+            value={value}
+            preview="edit"
+            extraCommands={[codePreview, commands.fullscreen]}
+            height={500}
+            onChange={(val) => {
+              setValueMd(val!);
+              (async () => {
+
+                setValue(
+                  "content",
+                  JSON.stringify(
+                    await getSerialize(value!.replace(/\\n/g, "\\"))
+                  )
+                );
+              })();
+            }}
+          />
+        </>
 
         <button
           onClick={onSubmit}
@@ -174,7 +178,6 @@ const Editor: React.FC<IEditor> = ({}) => {
             font-sans
             mt-10
             mb-4
-
         "
         >
           <BsFillSendFill size={20} />

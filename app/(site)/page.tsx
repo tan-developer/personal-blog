@@ -2,19 +2,12 @@ import Footer from "../components/footer";
 import Wrapper from "../components/UI/Wrapper";
 import Header from "../components/header";
 import HeaderUI from "../components/UI/Header";
-import rehypeHighlight from "rehype-highlight/lib";
-import { serialize } from "next-mdx-remote/serialize";
-import ClientRender from "../components/Client";
-import MDXRender from "../admin/components/MD/MDXRender";
 import Link from "../components/UI/Link";
 
 export default async function Home() {
   return (
-    <main className="max-w-xl w-full mx-auto overflow-y-auto md:pt-20 min-h-screen pt-5 px-2 pb-20">
-      <Wrapper className="lg:hidden block">
-        <Header />
-      </Wrapper>
-
+    <>
+     
       <HeaderUI
         desc="Development for successful digital products and websites"
         title="Youth & Paginate"
@@ -92,24 +85,6 @@ export default async function Home() {
         </p>
       </div>
 
-      <Wrapper className="lg:hidden block mt-10">
-        <Footer />
-      </Wrapper>
-    </main>
+    </>
   );
 }
-
-// const {props : {source}} = await getSerialize('');
-
-// <ClientRender fallback={<MDXRender source={source} />} />
-
-// async function getSerialize(data: string) {
-//   const source = data;
-//   const mdxSource = await serialize(source, {
-//     mdxOptions: {
-//       development: process.env.NODE_ENV === "development",
-//       rehypePlugins: [rehypeHighlight],
-//     },
-//   });
-//   return { props: { source: mdxSource } };
-// }
