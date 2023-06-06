@@ -1,10 +1,9 @@
 import Prisma from "@prisma/client";
 import getAllPostByPage from "../actions/getPostByPage";
-import Post from "../admin/components/Post";
 import Header from "../components/UI/Header";
-import { GetServerSideProps } from "next";
 import { notFound } from "next/navigation";
 import getPostLength from "@/app/actions/getPostLength";
+import Posts from "./components/Posts";
 
 const isPosts = (posts: Prisma.Post[] | []): posts is Prisma.Post[] => {
   return posts.length > 0;
@@ -20,9 +19,6 @@ export default async function Home() {
     page: 1,
   });
 
-  if (posts.length === 0 && posts) {
-    notFound();
-  }
 
   const count = await getPostLength();
 
@@ -33,19 +29,7 @@ export default async function Home() {
         <Header desc="Exploring Code with an Intern" title="Writings" />
 
         {isPosts(posts) && (
-          <ul
-            className="
-          flex flex-wrap
-          w-full
-          mt-10
-          [&>*:not(:last-child)]:border-b-[.25px]
-          [&>*:not(:last-child)]:border-gray-700/50
-          "
-          >
-            {posts.map((post) => {
-              return <Post post={post} key={post.id} />;
-            })}
-          </ul>
+          <Posts posts={posts}/>
         )}
         <div className="flex w-full justify-between py-10">
           <div className="">

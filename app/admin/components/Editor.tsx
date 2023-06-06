@@ -232,7 +232,6 @@ async function getSerialize(data: string) {
   const source = data;
   const mdxSource = await serialize(source, {
     mdxOptions: {
-      development: process.env.NODE_ENV === "development",
       rehypePlugins: [rehypeHighlight],
     },
   });
