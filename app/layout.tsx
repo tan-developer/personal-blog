@@ -1,3 +1,4 @@
+import { FormProvider } from "react-hook-form";
 import SideBar from "./components/aside";
 import Navbar from "./components/navbar";
 import AuthContext from "./context/AuthProvider";
@@ -5,7 +6,7 @@ import ToasterContext from "./context/ToasterContext";
 import "./globals.css";
 
 export const metadata = {
-  title: "Tan Blog",
+  title: "tanngocph ― Front-end Developer",
   description: "Personal Blog",
 };
 

@@ -33,8 +33,6 @@ const codePreview: ICommand = {
 interface IEditor {}
 
 const Editor: React.FC<IEditor> = ({}) => {
-  const params = useParams();
-  console.log(params);
 
   const [value, setValueMd] = React.useState("");
   const [previewValue, setPreview] =
@@ -42,8 +40,7 @@ const Editor: React.FC<IEditor> = ({}) => {
       MDXRemoteSerializeResult<Record<string, unknown>, Record<string, unknown>>
     >();
 
-  const { data, status } = useSession();
-  const router = useRouter();
+  const { data } = useSession();
 
 
   useEffect(() => {

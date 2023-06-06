@@ -25,7 +25,7 @@ const Header: React.FC<HeaderProps> = ({ children }) => {
         </div>
 
         <div className="flex flex-col ml-4">
-          <p className="font-bold italic text-xl">tanngocp</p>
+          <p className="font-bold italic text-xl">tanngocph</p>
 
           <ul className="flex">
             {socialLink.map((element) => (

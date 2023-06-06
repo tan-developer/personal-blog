@@ -39,6 +39,8 @@ const Button: React.FC<ButtonProps> = ({
           rounded-md
           text-gray-500
           font-medium
+          font-sans
+          hover:text-black
           mt-4
       `,
         disable && "opacity-50 cursor-default",

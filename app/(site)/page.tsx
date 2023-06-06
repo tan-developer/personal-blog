@@ -92,7 +92,7 @@ export default async function Home() {
         </p>
       </div>
 
-      <Wrapper className="lg:hidden block">
+      <Wrapper className="lg:hidden block mt-10">
         <Footer />
       </Wrapper>
     </main>

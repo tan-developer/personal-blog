@@ -30,7 +30,9 @@ const Input: React.FC<InputProps> = ({
       <label
         htmlFor={id}
         className="
-        
+          text-sm
+          font-medium
+          text-gray-300
         "
       >
         {label}
@@ -41,7 +43,7 @@ const Input: React.FC<InputProps> = ({
           type={type}
           autoComplete={id}
           disabled={disable}
-          {...register(id, { required })}
+          {...register(id, { required : true })}
           className={clsx(
             `
               w-full
@@ -52,9 +54,7 @@ const Input: React.FC<InputProps> = ({
               font-sans
               py-2 pl-4 pr-4
               focus:outline-none
-            `,
-            errors && "focus:ring-rose-500",
-            disable && "opacity-50 cursor-default"
+            `
           )}
         />
       </div>

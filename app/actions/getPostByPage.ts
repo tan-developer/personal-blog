@@ -3,6 +3,7 @@ import prisma from "@/app/libs/prismadb"
 
 const getAllPostByPage = async ({limit = 10, page = 1}) => {
   try {
+    
     const posts : Post[] = await prisma.post.findMany({
       orderBy : {
         createdAt : 'desc'
