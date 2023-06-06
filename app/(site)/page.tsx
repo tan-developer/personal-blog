@@ -7,7 +7,6 @@ import Link from "../components/UI/Link";
 export default async function Home() {
   return (
     <>
-     
       <HeaderUI
         desc="Development for successful digital products and websites"
         title="Youth & Paginate"
@@ -64,7 +63,10 @@ export default async function Home() {
         <p>
           From an early age, I developed a deep passion for programming, with a
           particular fondness for{" "}
-          <Link href="" className="text-main-blue hover:underline italic font-bold">
+          <Link
+            href=""
+            className="text-main-blue hover:underline italic font-bold"
+          >
             Typescript
           </Link>
           . Its versatility and extensive use in web development have captivated
@@ -76,7 +78,10 @@ export default async function Home() {
           I am excited to connect with fellow professionals and collaborate on
           exciting projects. If you have any opportunities or would like to
           discuss front-end development, Next.js,{" "}
-          <Link href="" className="text-main-blue hover:underline italic font-bold">
+          <Link
+            href=""
+            className="text-main-blue hover:underline italic font-bold"
+          >
             Typescript
           </Link>
           , or anything related to programming, I would be delighted to engage
@@ -84,7 +89,6 @@ export default async function Home() {
           forward to connecting with you!"
         </p>
       </div>
-
     </>
   );
 }
