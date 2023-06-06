@@ -27,8 +27,8 @@ export default async function Admin() {
           [&>*:not(:last-child)]:border-gray-700/50
         "
           >
-            {listPost.map((post: Prisma.Post) => (
-              <Post post={post} />
+            {listPost.map((post: Prisma.Post , index) => (
+              <Post post={post} key={index}/>
             ))}
           </ul>
         </>
