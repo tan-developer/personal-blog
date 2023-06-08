@@ -98,7 +98,7 @@ const Editor: React.FC<IEditor> = ({}) => {
           .then(() => {
             toast.dismiss(toastId);
             toast.success("Upload Post Successfully 🚀");
-            // axios.get(`/api/revalidate?path=/blog&access_token=13406433cecd2567fd0f03571bee1362`)
+            axios.get(`/api/revalidate?path=/blog&access_token=13406433cecd2567fd0f03571bee1362`)
           })
           .catch(() => {
             toast.dismiss(toastId);

@@ -8,8 +8,7 @@ import { notFound } from "next/navigation";
 const isString = (id: unknown): id is string => {
   return typeof id === "string";
 };
-
-export const theme = `
+const theme = `
   prose 
   prose-invert 
   prose-a:text-main-blue 
