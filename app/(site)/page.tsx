@@ -1,6 +1,3 @@
-import Footer from "../components/footer";
-import Wrapper from "../components/UI/Wrapper";
-import Header from "../components/header";
 import HeaderUI from "../components/UI/Header";
 import Link from "../components/UI/Link";
 

@@ -1,6 +1,5 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import Admin from "./Admin";
 import Button from "@/app/components/UI/Button";
 import { useRouter } from 'next/navigation';

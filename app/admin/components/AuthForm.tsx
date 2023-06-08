@@ -7,12 +7,10 @@ import Input from "@/app/components/UI/Input";
 import axios from "axios";
 
 import React from "react";
-import { useForm, Resolver, SubmitHandler, FieldValues } from "react-hook-form";
+import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { toast } from "react-hot-toast";
-import getCurrentUser from "@/app/actions/getCurrentUser";
-import { User } from "@prisma/client";
 
 export type Variant = "LOGIN" | "REGISTER";
 

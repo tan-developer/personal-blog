@@ -4,6 +4,7 @@ import Header from "../components/UI/Header";
 import { notFound } from "next/navigation";
 import getPostLength from "@/app/actions/getPostLength";
 import Posts from "./components/Posts";
+import clsx from "clsx";
 
 const isPosts = (posts: Prisma.Post[] | []): posts is Prisma.Post[] => {
   return posts.length > 0;
@@ -19,7 +20,6 @@ export default async function Home() {
     page: 1,
   });
 
-
   const count = await getPostLength();
 
   const next = 1 * 10 > count;
@@ -28,25 +28,28 @@ export default async function Home() {
       <div className="">
         <Header desc="Exploring Code with an Intern" title="Writings" />
 
-        {isPosts(posts) && (
-          <Posts posts={posts}/>
-        )}
+        {isPosts(posts) && <Posts posts={posts} />}
         <div className="flex w-full justify-between py-10">
           <div className="">
-            <button
-              disabled={true}
-              className="underline text-xl hover:text-main-blue transition-all disabled:text-gray-500 disabled:hover:text-gray-500"
+            <a
+              className={clsx(
+                `underline text-xl hover:text-main-blue transition-all cursor-pointer`,
+                true && 'pointer-events-none text-gray-500'
+              )}
             >
               Previous
-            </button>
+            </a>
           </div>
           <div className="">
-            <button
-              disabled={next}
-              className="underline text-xl hover:text-main-blue transition-all disabled:text-gray-500 disabled:hover:text-gray-500"
+            <a
+              href={`/blog/${2}`}
+              className={clsx(
+                `underline text-xl hover:text-main-blue transition-all cursor-pointer`,
+                next && 'pointer-events-none text-gray-500'
+              )}
             >
               Next
-            </button>
+            </a>
           </div>
         </div>
       </div>

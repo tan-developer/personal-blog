@@ -1,10 +1,7 @@
 'use client'
 
-import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemoteSerializeResult } from "next-mdx-remote";
-import rehypeHighlight from "rehype-highlight/lib";
 import MDXRender from "@/app/admin/components/MD/MDXRender";
-import { useState } from "react";
 
 interface IMDXWrapper {
   source: string;

@@ -34,10 +34,9 @@ export default function RootLayout({
 
             <main
               className=" 
-    max-w-2xl w-full mx-auto overflow-y-auto md:pt-20 min-h-screen
-    post px-6  pb-20  lg:px-20
-
-    "
+                max-w-2xl w-full mx-auto overflow-y-auto md:pt-20 min-h-screen
+                post px-6  pb-20  lg:px-20
+                "
             >
               <Wrapper className="lg:hidden block">
                 <Header />

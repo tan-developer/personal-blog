@@ -12,7 +12,6 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
 import Input from "@/app/components/UI/Input";
 import UpLoad from "./Upload";
-import { useParams, useRouter } from "next/navigation";
 import Wrapper from "@/app/components/UI/Wrapper";
 import MDXRender from "./MD/MDXRender";
 import { serialize } from "next-mdx-remote/serialize";
@@ -32,7 +31,19 @@ const codePreview: ICommand = {
 
 interface IEditor {}
 
+export const theme = `
+  prose 
+  prose-invert 
+  prose-a:text-main-blue 
+  prose-blockquote:font-base 
+  prose-blockquote:italic 
+  prose-blockquote:text-2xl 
+  prose-img:w-full
+`
+
+
 const Editor: React.FC<IEditor> = ({}) => {
+  console.log('as')
   const [value, setValueMd] = React.useState("");
   const [previewValue, setPreview] =
     React.useState<
@@ -87,6 +98,7 @@ const Editor: React.FC<IEditor> = ({}) => {
           .then(() => {
             toast.dismiss(toastId);
             toast.success("Upload Post Successfully 🚀");
+            // axios.get(`/api/revalidate?path=/blog&access_token=13406433cecd2567fd0f03571bee1362`)
           })
           .catch(() => {
             toast.dismiss(toastId);
@@ -209,7 +221,7 @@ const Editor: React.FC<IEditor> = ({}) => {
       "
         >
           <main
-            className="
+            className={`
               mx-auto
               my-10
               prose
@@ -217,7 +229,8 @@ const Editor: React.FC<IEditor> = ({}) => {
               font-sans 
               w-full
               prose-img:w-full
-          "
+              ${theme}
+            `}
           >
             {previewValue && <MDXRender source={previewValue} />}
           </main>

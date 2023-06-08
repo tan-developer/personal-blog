@@ -1,6 +1,4 @@
 import getAllPostById from "@/app/actions/getPostById";
-import MDXRender from "@/app/admin/components/MD/MDXRender";
-import ClientRender from "@/app/components/Client";
 import MDXWrapper from "@/app/components/UI/MDXWrapper";
 import Wrapper from "@/app/components/UI/Wrapper";
 import { format } from "date-fns";
@@ -10,6 +8,16 @@ import { notFound } from "next/navigation";
 const isString = (id: unknown): id is string => {
   return typeof id === "string";
 };
+
+export const theme = `
+  prose 
+  prose-invert 
+  prose-a:text-main-blue 
+  prose-blockquote:font-base 
+  prose-blockquote:italic 
+  prose-blockquote:text-2xl 
+  prose-img:w-full
+`
 
 export default async function Home(props: any) {
   const {
@@ -43,7 +51,7 @@ export default async function Home(props: any) {
           height={1000000000}
         />
 
-        <Wrapper className="mt-20">
+        <Wrapper className={`mt-20 ${theme}`}>
           <MDXWrapper source={content} />
         </Wrapper>
       </div>

@@ -1,4 +1,8 @@
-import Image from "next/image";
+"use client";
+
+import { Post } from "@prisma/client";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { BsArrowRightShort } from "react-icons/bs";
 
 interface BlogHeaderInterface {
@@ -7,12 +11,47 @@ interface BlogHeaderInterface {
 }
 
 const LatestBlog: React.FC = () => {
-  const dummyData: BlogHeaderInterface[] = [
-    { title: "My first blog", desc: "none" },
-    { title: "My second blog", desc: "nho cac con vo qua" },
-  ];
+  const [posts, setPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    const running = async () => {
+      const post = await axios.post("/api/post/get", {
+        limit: 2,
+        page: 1,
+      });
+
+      setPosts(post.data);
+    };
+
+    running();
+  }, []);
+
+  const LoadingJSX = (
+    <div
+      role="status"
+      className="max-w-lg p-4 space-y-4  divide-y divide-gray-200 rounded shadow animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700"
+    >
+      <div className="flex items-center justify-between">
+        <div>
+          <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+          <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+        </div>
+        <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+      </div>
+      <div className="flex items-center justify-between pt-4">
+        <div>
+          <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+          <div className="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+        </div>
+        <div className="h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+      </div>
+      <span className="sr-only">Loading...</span>
+    </div>
+  );
+
+  console.log(posts);
   return (
-    <div className="font-sans border border-gray-700 rounded-lg p-4">
+    <div className="font-sans border border-gray-700 rounded-lg p-4 transition-all">
       <div className="flex text-gray-400 text-center items-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -34,17 +73,19 @@ const LatestBlog: React.FC = () => {
       </div>
 
       <ul className="mt-2">
-        {dummyData.map(({title , desc}) => (
-          <li className="font-medium text-sm py-[10px] capitalize [&:not(:last-child)]:border-b border-gray-700" key={title}>
-            <div className="flex text-center items-center w-full justify-between text-gray-200">
-              <p>{title}</p>
-              <BsArrowRightShort size={20} />
-            </div>
-            <div className="text-main-blue font-thin ">
-              {desc}
-            </div>
-          </li>
-        ))}
+        {posts.length > 0 &&
+          posts.map(({ title, desc, id }) => (
+            <a href={`/p/${id}`} key={title}>
+              <li className="font-medium text-sm py-[10px] capitalize [&:not(:last-child)]:border-b border-gray-700">
+                <div className="flex text-center items-center w-full justify-between text-gray-200">
+                  <p>{title}</p>
+                  <BsArrowRightShort size={20} />
+                </div>
+                <div className="text-main-blue font-thin ">{desc}</div>
+              </li>
+            </a>
+          ))}
+        {posts.length === 0 && LoadingJSX}
       </ul>
     </div>
   );

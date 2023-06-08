@@ -1,4 +1,3 @@
-'use client'
 
 import Post from "@/app/admin/components/Post";
 
