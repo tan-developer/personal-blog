@@ -43,7 +43,7 @@ export const theme = `
 
 
 const Editor: React.FC<IEditor> = ({}) => {
-  console.log('as')
+  // console.log('as')
   const [value, setValueMd] = React.useState("");
   const [previewValue, setPreview] =
     React.useState<
