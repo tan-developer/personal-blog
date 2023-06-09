@@ -6,6 +6,7 @@ const Navbar: React.FC = () => {
     ["About", "/"],
     ["Writings", "/blog"],
     ["Project", "/project"],
+    ["Admin", "/admin"],
     ["Contact", "/contact"],
   ];
 
@@ -25,6 +26,7 @@ const Navbar: React.FC = () => {
           left-0
           w-screen
           md:pl-4
+          z-50
         "
     >
       <Link href={'/'}>
@@ -37,11 +39,11 @@ const Navbar: React.FC = () => {
         />
       </Link>
 
-      <ul className="md:flex md:flex-col grid grid-cols-4 w-full md:w-12 md:bg-opacity-0 bg-main-blue md:bg-black ">
+      <ul className="md:flex md:flex-col grid grid-cols-5 w-full md:w-12 md:bg-opacity-0 bg-main-blue md:bg-black ">
         {linkArr.map((element) => (
           <li
             key={element[0]}
-            className="md:w-12 md:h-12 m-auto h-20 flex items-center"
+            className="md:w-12 md:h-12 m-auto h-16 flex items-center"
           >
             <Link href={element[1]}>
               <p className="md:hidden block text-black ">{element[0]}</p>

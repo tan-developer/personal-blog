@@ -11,6 +11,7 @@ import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 
 import { signIn, useSession } from "next-auth/react";
 import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export type Variant = "LOGIN" | "REGISTER";
 
@@ -24,7 +25,7 @@ const AuthForm: React.FC = () => {
 
   const [variant, setVariant] = React.useState<Variant>("LOGIN");
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-
+  const router = useRouter();
   const { data, status } = useSession();
 
   useEffect(() => {
@@ -84,6 +85,7 @@ const AuthForm: React.FC = () => {
 
         if (callback?.ok && !callback.error) {
           toast.success("Login successfully !");
+          router.refresh();
         }
       })
       .finally(async () => {

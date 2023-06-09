@@ -4,7 +4,7 @@ import Admin from "./Admin";
 import Button from "@/app/components/UI/Button";
 import { useRouter } from 'next/navigation';
 
-import { AiOutlinePlus } from "react-icons/ai";
+import { BiPlus } from "react-icons/bi";
 import { User } from "@prisma/client";
 
 interface UserProps {
@@ -28,10 +28,11 @@ const User: React.FC<UserProps> = ({user}) => {
             items-center 
             justify-center 
             font-sans 
-            font-normal 
-            active:translate-y-1"
+            font-semibold 
+            active:translate-y-1
+            "
           >
-            <AiOutlinePlus size={15} />
+            <BiPlus size={15} />
             <p> &nbsp; POST</p>
           </Button>
         </div>
