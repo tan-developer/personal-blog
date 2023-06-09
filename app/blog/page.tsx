@@ -14,6 +14,8 @@ const isNumber = (String: unknown): String is number => {
   return !isNaN(Number(String));
 };
 
+export const revalidate = 0;
+
 export default async function Home() {
   const posts = await getAllPostByPage({
     limit: 10,

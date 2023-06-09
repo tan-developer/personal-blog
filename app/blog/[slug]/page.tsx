@@ -11,6 +11,8 @@ const isPosts = (posts: Prisma.Post[] | []): posts is Prisma.Post[] => {
   return posts.length > 0;
 };
 
+export const revalidate = 0;
+
 const isNumber = (String: unknown): String is number => {
   return !isNaN(Number(String));
 };
