@@ -33,7 +33,7 @@ export default async function Home(props: any) {
     notFound();
   }
   const { title, desc, content, createdAt } = post;
-  console.log(content);
+  // console.log(content);
   return (
     <>
       <div className="font-sans">

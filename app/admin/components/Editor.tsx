@@ -97,7 +97,7 @@ const Editor: React.FC<IEditor> = ({
     defaultValues: {
       header: title,
       desc: desc,
-      content: JSON.parse(JSON.parse(content)),
+      content: '',
       imageUrl: titleImage,
       rawContent: rawContent,
     },
@@ -105,7 +105,7 @@ const Editor: React.FC<IEditor> = ({
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     if (!data.target) {
-      console.log(data)
+      // console.log(data)
       if (
         data.header &&
         data.header.length > 10 &&
@@ -181,7 +181,7 @@ const Editor: React.FC<IEditor> = ({
       }
     }
   };
-  console.log(Status);
+  // console.log(Status);
 
   return (
     <form action="" onSubmit={handleSubmit(onSubmit)}>

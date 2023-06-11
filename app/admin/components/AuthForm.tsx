@@ -29,7 +29,7 @@ const AuthForm: React.FC = () => {
   const { data, status } = useSession();
 
   useEffect(() => {
-    console.log(data, status);
+    // console.log(data, status);
 
     // development env
     // loginHandler({
