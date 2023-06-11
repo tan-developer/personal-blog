@@ -10,7 +10,7 @@ import clsx from "clsx";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import {AiFillDelete} from 'react-icons/ai'
-import { useRouter } from "next/navigation";
+import { useRouter  , usePathname} from "next/navigation";
 
 interface Props {
   post: Post;
@@ -18,6 +18,9 @@ interface Props {
 
 const Post: React.FC<Props> = ({ post }) => {
   const router = useRouter();
+
+  const path = usePathname();
+
 
   const [state, setState] = useState<boolean>(false);
 
@@ -90,7 +93,7 @@ const Post: React.FC<Props> = ({ post }) => {
         </div>
       </Link>
 
-      <div className="absolute bottom-0 flex  w-full justify-between group-hover:opacity-100 transition-all">
+      <div className={clsx("absolute bottom-0 flex  w-full justify-between group-hover:opacity-100 transition-all" ,!path.includes('/admin') && "hidden" )} >
         <a
           href={`/admin/edit/${post.id}`}
           className="text-main-blue hover:underline "
