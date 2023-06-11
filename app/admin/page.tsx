@@ -8,7 +8,6 @@ import Prisma from "@prisma/client";
 export default async function Admin() {
   const user = await getCurrentUser();
 
-
   const listPost: (Post & {})[] = await getAllPost();
 
   return (
@@ -16,7 +15,7 @@ export default async function Admin() {
       <AuthForm />
       {user && (
         <>
-          <User user={user}/>
+          <User user={user} />
 
           <ul
             className="
@@ -27,8 +26,8 @@ export default async function Admin() {
           [&>*:not(:last-child)]:border-gray-700/50
         "
           >
-            {listPost.map((post: Prisma.Post , index) => (
-              <Post post={post} key={index}/>
+            {listPost.map((post: Prisma.Post, index) => (
+                <Post post={post} key={index} />
             ))}
           </ul>
         </>

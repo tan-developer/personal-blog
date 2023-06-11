@@ -1,10 +1,15 @@
 import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb"
+import getSession from "@/app/actions/getSession";
 
 export async function POST(request: Request) {
 
   const data = await request.json();
-  console.log(data)
+
+    const session = await getSession();
+
+    console.log(session)
+
     const post = await prisma.post.create({
       data : {
         title : data.header,
@@ -14,7 +19,7 @@ export async function POST(request: Request) {
         rawContent : data.rawContent,
         author : {
           connect : {
-            email : data.author
+            email : session?.user?.email!
           }
         }
       }

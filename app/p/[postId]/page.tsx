@@ -16,7 +16,7 @@ const theme = `
   prose-blockquote:italic 
   prose-blockquote:text-2xl 
   prose-img:w-full
-`
+`;
 
 export default async function Home(props: any) {
   const {
@@ -33,7 +33,7 @@ export default async function Home(props: any) {
     notFound();
   }
   const { title, desc, content, createdAt } = post;
-
+  console.log(content);
   return (
     <>
       <div className="font-sans">

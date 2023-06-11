@@ -3,6 +3,7 @@ import Editor from "../../components/Editor";
 import getAllPostById from "@/app/actions/getPostById";
 import { Post } from "@prisma/client";
 import getSession from "@/app/actions/getSession";
+import { notFound } from "next/navigation";
 
 export default async function Edit(props : any) {
 
@@ -12,12 +13,12 @@ export default async function Edit(props : any) {
 
   const post : Post | null = await getAllPostById(postId)
 
-  console.log(session)
-
-
+  if (!post) {
+    return notFound();
+  }
   return (
       <Suspense>
-        <Editor />
+        <Editor post={post!}/>
       </Suspense>
   );
 }

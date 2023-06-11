@@ -9,7 +9,6 @@ const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 import React from "react";
 import { commands, ICommand } from "@uiw/react-md-editor";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { useSession } from "next-auth/react";
 import Input from "@/app/components/UI/Input";
 import UpLoad from "./Upload";
 import Wrapper from "@/app/components/UI/Wrapper";
@@ -23,6 +22,7 @@ import { toast } from "react-hot-toast";
 import { BiError } from "react-icons/bi";
 import axios from "axios";
 import { Post } from "@prisma/client";
+import { useRouter } from "next/navigation";
 
 const codePreview: ICommand = {
   name: "preview",
@@ -65,7 +65,9 @@ const Editor: React.FC<IEditor> = ({
   const Status = useRef(isPost(post) ? STATUS.EDIT : STATUS.NEW_POST);
   const { title, content, titleImage, desc, rawContent , id } = post!;
 
-  const [value, setValueMd] = React.useState("");
+  const router = useRouter()
+
+  const [value, setValueMd] = React.useState(rawContent);
   const [previewValue, setPreview] =
     React.useState<
       MDXRemoteSerializeResult<Record<string, unknown>, Record<string, unknown>>
@@ -95,7 +97,7 @@ const Editor: React.FC<IEditor> = ({
     defaultValues: {
       header: title,
       desc: desc,
-      content: content,
+      content: JSON.parse(JSON.parse(content)),
       imageUrl: titleImage,
       rawContent: rawContent,
     },
@@ -115,7 +117,7 @@ const Editor: React.FC<IEditor> = ({
           case STATUS.EDIT:
             const toastId_1 = toast.loading("Updating...");
             axios
-              .post("/api/post/update", {
+              .post("/api/post/edit", {
                 ...data,
                 id : id
               })
@@ -125,6 +127,9 @@ const Editor: React.FC<IEditor> = ({
                 axios.get(
                   `/api/revalidate?path=/blog&access_token=13406433cecd2567fd0f03571bee1362`
                 );
+              })
+              .then(() => {
+                router.push(`/p/${id}`)
               })
               .catch(() => {
                 toast.dismiss(toastId);
@@ -143,6 +148,9 @@ const Editor: React.FC<IEditor> = ({
                 axios.get(
                   `/api/revalidate?path=/blog&access_token=13406433cecd2567fd0f03571bee1362`
                 );
+              })
+              .then((data) => {
+                
               })
               .catch(() => {
                 toast.dismiss(toastId);
@@ -244,7 +252,7 @@ const Editor: React.FC<IEditor> = ({
         "
         >
           <BsFillSendFill size={20} />
-          <h2 className="ml-2">Send</h2>
+          <h2 className="ml-2">{Status.current === STATUS.EDIT ? "Save" : "Send"}</h2>
         </button>
 
         <h1
@@ -296,7 +304,6 @@ async function getSerialize(data: string) {
   const source = data;
   const mdxSource = await serialize(source, {
     mdxOptions: {
-      development: true,
       rehypePlugins: [rehypeHighlight],
     },
   });
