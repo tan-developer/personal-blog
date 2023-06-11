@@ -77,7 +77,7 @@ const LatestBlog: React.FC = () => {
           posts.map(({ title, desc, id }) => (
             <a href={`/p/${id}`} key={title}>
               <li className="font-medium text-sm py-[10px] capitalize [&:not(:last-child)]:border-b border-gray-700">
-                <div className="flex text-center items-center w-full justify-between text-gray-200">
+                <div className="flex items-center w-full justify-between text-gray-200">
                   <p>{title}</p>
                   <BsArrowRightShort size={20} />
                 </div>

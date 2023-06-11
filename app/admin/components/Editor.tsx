@@ -2,7 +2,7 @@
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
 import dynamic from "next/dynamic";
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useRef } from "react";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
@@ -22,14 +22,13 @@ import { toast } from "react-hot-toast";
 
 import { BiError } from "react-icons/bi";
 import axios from "axios";
+import { Post } from "@prisma/client";
 
 const codePreview: ICommand = {
   name: "preview",
   keyCommand: "preview",
   value: "preview",
 };
-
-interface IEditor {}
 
 export const theme = `
   prose 
@@ -39,18 +38,39 @@ export const theme = `
   prose-blockquote:italic 
   prose-blockquote:text-2xl 
   prose-img:w-full
-`
+`;
+interface IEditor {
+  post?: Post;
+}
 
+const isPost = (post: Post | any): post is Post => {
+  return post.title !== '';
+};
 
-const Editor: React.FC<IEditor> = ({}) => {
-  // console.log('as')
+enum STATUS {
+  NEW_POST,
+  EDIT,
+}
+
+const Editor: React.FC<IEditor> = ({
+  post = {
+    title: "",
+    content: "",
+    desc: "",
+    id: "",
+    rawContent: "",
+    titleImage: "",
+  },
+}) => {
+  const Status = useRef(isPost(post) ? STATUS.EDIT : STATUS.NEW_POST);
+  const { title, content, titleImage, desc, rawContent , id } = post!;
+
   const [value, setValueMd] = React.useState("");
   const [previewValue, setPreview] =
     React.useState<
       MDXRemoteSerializeResult<Record<string, unknown>, Record<string, unknown>>
     >();
 
-  const { data } = useSession();
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -73,16 +93,17 @@ const Editor: React.FC<IEditor> = ({}) => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      header: "",
-      desc: "",
-      author: data?.user?.email,
-      content: ``,
-      imageUrl: ``,
+      header: title,
+      desc: desc,
+      content: content,
+      imageUrl: titleImage,
+      rawContent: rawContent,
     },
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     if (!data.target) {
+      console.log(data)
       if (
         data.header &&
         data.header.length > 10 &&
@@ -90,20 +111,48 @@ const Editor: React.FC<IEditor> = ({}) => {
         data.imageUrl.startsWith("https://res.cloudinary.com/")
       ) {
         // All conditions are met
-        const toastId = toast.loading("Posting...");
-        axios
-          .post("/api/post", {
-            ...data,
-          })
-          .then(() => {
-            toast.dismiss(toastId);
-            toast.success("Upload Post Successfully 🚀");
-            axios.get(`/api/revalidate?path=/blog&access_token=13406433cecd2567fd0f03571bee1362`)
-          })
-          .catch(() => {
-            toast.dismiss(toastId);
-            toast.error("Something is wrong . Please reload the page 😵");
-          });
+        switch (Status.current) {
+          case STATUS.EDIT:
+            const toastId_1 = toast.loading("Updating...");
+            axios
+              .post("/api/post/update", {
+                ...data,
+                id : id
+              })
+              .then(() => {
+                toast.dismiss(toastId_1);
+                toast.success("Update Post Successfully 🚀");
+                axios.get(
+                  `/api/revalidate?path=/blog&access_token=13406433cecd2567fd0f03571bee1362`
+                );
+              })
+              .catch(() => {
+                toast.dismiss(toastId);
+                toast.error("Something is wrong . Please reload the page 😵");
+              });
+            break;
+          case STATUS.NEW_POST:
+            const toastId = toast.loading("Posting...");
+            axios
+              .post("/api/post", {
+                ...data,
+              })
+              .then(() => {
+                toast.dismiss(toastId);
+                toast.success("Upload Post Successfully 🚀");
+                axios.get(
+                  `/api/revalidate?path=/blog&access_token=13406433cecd2567fd0f03571bee1362`
+                );
+              })
+              .catch(() => {
+                toast.dismiss(toastId);
+                toast.error("Something is wrong . Please reload the page 😵");
+              });
+            break;
+
+          default:
+            break;
+        }
       } else {
         // Notify user about the failed condition(s)
         if (!data.header || data.header.length <= 10) {
@@ -124,6 +173,7 @@ const Editor: React.FC<IEditor> = ({}) => {
       }
     }
   };
+  console.log(Status);
 
   return (
     <form action="" onSubmit={handleSubmit(onSubmit)}>
@@ -160,6 +210,7 @@ const Editor: React.FC<IEditor> = ({}) => {
             onChange={(val) => {
               setValueMd(val!);
               (async () => {
+                setValue("rawContent", val!);
 
                 setValue(
                   "content",
@@ -245,6 +296,7 @@ async function getSerialize(data: string) {
   const source = data;
   const mdxSource = await serialize(source, {
     mdxOptions: {
+      development: true,
       rehypePlugins: [rehypeHighlight],
     },
   });

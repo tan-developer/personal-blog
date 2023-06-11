@@ -26,6 +26,7 @@ model Post {
   title      String
   desc       String
   content    String
+  rawContent String   @default("")
   titleImage String
   createdAt  DateTime @default(now()) // auto
   updatedAt  DateTime @updatedAt // auto

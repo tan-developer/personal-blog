@@ -28,7 +28,7 @@ const User: React.FC<UserProps> = ({user}) => {
             items-center 
             justify-center 
             font-sans 
-            font-semibold 
+            font-semibold
             active:translate-y-1
             "
           >

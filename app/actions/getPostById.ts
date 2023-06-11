@@ -8,7 +8,7 @@ const getAllPostById = async (id : string) => {
 
     const postById = await prisma.post.findUnique({
       where : {
-        id : id
+        id : id,
       }
     })
 
