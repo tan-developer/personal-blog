@@ -28,17 +28,6 @@ const AuthForm: React.FC = () => {
   const router = useRouter();
   const { data, status } = useSession();
 
-  useEffect(() => {
-    // console.log(data, status);
-
-    // development env
-    // loginHandler({
-    //   email: "tan.devloper@gmail.com",
-    //   password: "Phamngoctan123",
-    // });
-
-    return () => {};
-  }, [status]);
 
   const {
     register,
@@ -80,7 +69,7 @@ const AuthForm: React.FC = () => {
     })
       .then((callback) => {
         if (callback?.error) {
-          toast.error("Invalid credentials");
+          toast.error("Invalid password or email. Please try again.");
         }
 
         if (callback?.ok && !callback.error) {
