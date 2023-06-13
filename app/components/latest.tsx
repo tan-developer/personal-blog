@@ -49,7 +49,6 @@ const LatestBlog: React.FC = () => {
     </div>
   );
 
-  // console.log(posts);
   return (
     <div className="font-sans border border-gray-700 rounded-lg p-4 transition-all">
       <div className="flex text-gray-400 text-center items-center">

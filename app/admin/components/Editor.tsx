@@ -105,7 +105,6 @@ const Editor: React.FC<IEditor> = ({
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     if (!data.target) {
-      // console.log(data)
       if (
         data.header &&
         data.header.length > 10 &&
@@ -181,7 +180,6 @@ const Editor: React.FC<IEditor> = ({
       }
     }
   };
-  // console.log(Status);
 
   return (
     <form action="" onSubmit={handleSubmit(onSubmit)}>

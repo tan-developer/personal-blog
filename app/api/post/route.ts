@@ -8,7 +8,6 @@ export async function POST(request: Request) {
 
     const session = await getSession();
 
-    console.log(session)
 
     const post = await prisma.post.create({
       data : {
