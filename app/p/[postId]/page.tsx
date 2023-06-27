@@ -18,6 +18,7 @@ const theme = `
   prose-img:w-full
 `;
 
+export const revalidate = 0;
 export default async function Home(props: any) {
   const {
     params: { postId },
